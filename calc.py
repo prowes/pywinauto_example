@@ -9,16 +9,14 @@ auto_ids_dict = {
     "-": "minusButton",
     "=": "equalButton",
     "results": "CalculatorResults",
-    "close": "Close",
-    "open_menu": "TogglePaneButton",
-    "settings": "SettingsItem",
-    "send_feedback": "FeedbackButton"
+    "close": "Close"
 }
 
 def test_one_adding():
     app = Application(backend="uia").start("calc.exe")
     # app = Application(backend="uia").connect(title="Calculator")
     dlg = Desktop(backend="uia").Calculator
+    dlg.wait("visible")
     dlg.child_window(auto_id=auto_ids_dict["1"]).click()
     dlg.child_window(auto_id=auto_ids_dict["+"]).click()
     dlg.child_window(auto_id=auto_ids_dict["2"]).click()
@@ -32,6 +30,7 @@ def test_one_adding():
 def test_two_substracting():
     app = Application(backend="uia").start("calc.exe")
     dlg = Desktop(backend="uia").Calculator
+    dlg.wait("visible")
     dlg.child_window(auto_id=auto_ids_dict["1"]).click()
     dlg.child_window(auto_id=auto_ids_dict["-"]).click()
     dlg.child_window(auto_id=auto_ids_dict["2"]).click()
@@ -40,4 +39,3 @@ def test_two_substracting():
     assert int(results.split(" ")[-1]) == -1  # show in inspect
     dlg.child_window(auto_id=auto_ids_dict["close"]).click()
     dlg.wait_not("visible")
-
